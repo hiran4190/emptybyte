@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EmptyByte — Turning Ideas into Digital Reality</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#2563EB;--blue2:#3B82F6;--blue3:#1D4ED8;
+  --glow:rgba(37,99,235,0.18);--glow2:rgba(59,130,246,0.10);
+  --black:#07090D;--dark:#0D1117;--dark2:#111827;--dark3:#161F2E;--dark4:#1A2540;
+  --white:#F0F4FF;--wdim:rgba(240,244,255,0.72);--wmute:rgba(240,244,255,0.38);--wfaint:rgba(240,244,255,0.10);
+  --border:rgba(255,255,255,0.07);--borderb:rgba(59,130,246,0.28);
+  --f:'Poppins',sans-serif;--nav:68px;--r:12px;--r2:18px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--black);color:var(--white);font-size:13px;font-weight:300;line-height:1.75;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--blue3);border-radius:4px}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(59,130,246,0.055) 1px,transparent 1px);background-size:36px 36px;pointer-events:none;z-index:0}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav);display:flex;align-items:center;padding:0 5%;justify-content:space-between;background:rgba(7,9,13,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+#nav.scrolled{box-shadow:0 4px 40px rgba(0,0,0,0.5)}
+.nav-brand{display:flex;align-items:center;gap:11px;cursor:pointer}
+.nav-logo-box{width:34px;height:34px;border-radius:8px;border:1px solid var(--borderb);background:var(--dark4);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-logo-box img{width:100%;height:100%;object-fit:contain}
+.nav-name{font-size:15px;font-weight:700;letter-spacing:-.3px;color:var(--white)}
+.nav-name span{color:var(--blue2)}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-size:12px;font-weight:400;letter-spacing:.4px;color:var(--wmute);text-decoration:none;cursor:pointer;transition:color .2s;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1.5px;background:var(--blue2);transform:scaleX(0);transition:transform .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-cta{font-size:12px;font-weight:500;padding:9px 22px;border-radius:7px;background:var(--blue);color:#fff;border:none;cursor:pointer;letter-spacing:.3px;transition:background .2s,transform .15s}
+.nav-cta:hover{background:var(--blue2);transform:translateY(-1px)}
+.nav-burger{display:none;background:none;border:1px solid var(--border);color:var(--white);font-size:18px;padding:7px 9px;border-radius:7px;cursor:pointer}
+
+/* HELPERS */
+.tag{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--blue2);font-weight:500;margin-bottom:14px}
+.tag i{font-size:12px}
+.stitle{font-size:clamp(22px,3.2vw,40px);font-weight:700;letter-spacing:-1px;line-height:1.15;color:var(--white);margin-bottom:12px}
+.ssub{font-size:13px;color:var(--wdim);line-height:1.9;max-width:540px;margin-bottom:44px}
+.btnp{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:var(--f);font-size:13px;font-weight:500;cursor:pointer;transition:background .2s,transform .15s}
+.btnp:hover{background:var(--blue2);transform:translateY(-1px)}
+.btng{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:transparent;color:var(--wdim);border:1px solid var(--border);border-radius:8px;font-family:var(--f);font-size:13px;cursor:pointer;transition:border-color .2s,color .2s}
+.btng:hover{border-color:var(--borderb);color:var(--white)}
+.card{background:var(--dark2);border:1px solid var(--border);border-radius:var(--r2);transition:border-color .25s,transform .2s}
+.card:hover{border-color:var(--borderb);transform:translateY(-2px)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 12px;border-radius:100px;background:var(--dark3);border:1px solid var(--border);color:var(--wmute)}
+.pill i{font-size:12px;color:var(--blue2)}
+section{padding:88px 5%;position:relative;z-index:1}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding-top:calc(var(--nav) + 60px);padding-bottom:80px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue2);font-weight:500;padding:7px 16px;border:1px solid var(--borderb);border-radius:100px;margin-bottom:22px;background:rgba(37,99,235,.07)}
+.hero-h1{font-size:clamp(38px,5.5vw,70px);font-weight:800;line-height:1.05;letter-spacing:-2.5px;margin-bottom:20px}
+.hero-h1 .blue{background:linear-gradient(90deg,var(--blue2) 0%,#93C5FD 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:13.5px;color:var(--wdim);line-height:1.85;max-width:460px;margin-bottom:34px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.hstat{background:var(--dark2);padding:18px 16px;text-align:center}
+.hstat-num{font-size:26px;font-weight:700;letter-spacing:-1px;color:var(--white);line-height:1}
+.hstat-num span{color:var(--blue2)}
+.hstat-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--wmute);margin-top:4px}
+.hero-right{position:relative;display:flex;flex-direction:column;gap:14px}
+.hero-img-main{height:350px;border-radius:var(--r2);overflow:hidden;position:relative}
+.hero-img-main img{width:100%;height:100%;object-fit:cover;filter:brightness(.65)}
+.hero-img-main::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.38) 0%,rgba(7,9,13,.5) 100%)}
+.hio{position:absolute;bottom:18px;left:18px;right:18px;z-index:2;background:rgba(7,9,13,.78);backdrop-filter:blur(10px);border:1px solid var(--borderb);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px}
+.hio-ic{width:36px;height:36px;min-width:36px;border-radius:8px;background:var(--glow);border:1px solid var(--borderb);display:flex;align-items:center;justify-content:center;color:var(--blue2);font-size:17px}
+.hio p{font-size:12px;font-weight:500;color:var(--white);margin-bottom:1px}
+.hio span{font-size:10px;color:var(--wmute)}
+.hero-img-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.him{height:155px;border-radius:var(--r);overflow:hidden;position:relative}
+.him img{width:100%;height:100%;object-fit:cover;filter:brightness(.58)}
+.him::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(7,9,13,.72))}
+.him-lbl{position:absolute;bottom:10px;left:12px;right:12px;z-index:2;font-size:11px;font-weight:500;color:var(--white)}
+
+/* TICKER */
+.ticker-wrap{background:var(--dark3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:1}
+.ticker-inner{display:inline-flex;animation:ticker 30s linear infinite}
+.ticker-inner:hover{animation-play-state:paused}
+.tki{display:inline-flex;align-items:center;gap:10px;padding:0 32px;font-size:12px;font-weight:500;color:var(--wmute)}
+.tki i{color:var(--blue2);font-size:14px}
+.tkd{color:var(--borderb);font-size:18px}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SERVICES */
+.services-intro{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-bottom:52px}
+.sii{height:370px;border-radius:var(--r2);overflow:hidden;position:relative}
+.sii img{width:100%;height:100%;object-fit:cover;filter:brightness(.58)}
+.sii::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.35),rgba(7,9,13,.48))}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.svc{padding:30px 26px;background:var(--dark2);border:1px solid var(--border);border-radius:var(--r2);transition:border-color .25s,transform .2s}
+.svc:hover{border-color:var(--borderb);transform:translateY(-2px)}
+.svc-ic{width:46px;height:46px;border-radius:10px;background:var(--glow);border:1px solid var(--borderb);display:flex;align-items:center;justify-content:center;color:var(--blue2);font-size:21px;margin-bottom:16px}
+.svc-name{font-size:15px;font-weight:600;color:var(--white);margin-bottom:9px;letter-spacing:-.2px}
+.svc-desc{font-size:12px;color:var(--wmute);line-height:1.85;margin-bottom:14px}
+.svc-pills{display:flex;flex-wrap:wrap;gap:6px}
+.sp{font-size:10px;padding:4px 10px;border-radius:100px;background:var(--dark3);border:1px solid var(--border);color:var(--wmute)}
+
+/* PROCESS */
+.proc-wrap{background:var(--dark);padding:88px 5%}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.proc-step{background:var(--dark2);padding:30px 22px;position:relative}
+.proc-step::before{content:attr(data-n);position:absolute;top:18px;right:18px;font-size:34px;font-weight:800;color:var(--wfaint);line-height:1;letter-spacing:-2px}
+.proc-ico{color:var(--blue2);font-size:24px;margin-bottom:14px}
+.proc-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:7px}
+.proc-desc{font-size:12px;color:var(--wmute);line-height:1.8}
+
+/* ABOUT */
+.about-bg{background:var(--dark3)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.about-imgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.aib{grid-column:1/-1;height:248px;border-radius:var(--r2);overflow:hidden;position:relative}
+.aib img{width:100%;height:100%;object-fit:cover;filter:brightness(.58)}
+.aib::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.38),rgba(7,9,13,.44))}
+.aibadge{position:absolute;bottom:14px;left:14px;z-index:2;background:rgba(7,9,13,.82);backdrop-filter:blur(8px);border:1px solid var(--borderb);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.ainum{font-size:20px;font-weight:700;color:var(--white);line-height:1}
+.ainum span{color:var(--blue2)}
+.ailbl{font-size:10px;color:var(--wmute);letter-spacing:.4px}
+.ais{height:172px;border-radius:var(--r);overflow:hidden;position:relative}
+.ais img{width:100%;height:100%;object-fit:cover;filter:brightness(.54)}
+.ais::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(29,78,216,.3),transparent)}
+.about-text{}
+.about-story{font-size:13px;color:var(--wdim);line-height:1.95;margin-bottom:16px}
+.founders-row{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.fchip{display:flex;align-items:center;gap:7px;padding:7px 12px;background:var(--dark2);border:1px solid var(--border);border-radius:100px;font-size:11px;color:var(--wdim)}
+.fav{width:24px;height:24px;border-radius:50%;background:var(--glow);border:1px solid var(--borderb);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--blue2)}
+.about-vals{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:22px}
+.avb{padding:18px;background:var(--dark2);border:1px solid var(--border);border-radius:var(--r)}
+.avb-ic{color:var(--blue2);font-size:17px;margin-bottom:7px}
+.avb-title{font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px}
+.avb-text{font-size:11px;color:var(--wmute);line-height:1.75}
+
+/* TECH */
+.tech-bg{background:var(--dark2)}
+.tech-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.tech-item{padding:20px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:var(--r);text-align:center;transition:border-color .2s}
+.tech-item:hover{border-color:var(--borderb)}
+.tech-ico{font-size:26px;color:var(--blue2);margin-bottom:7px}
+.tech-name{font-size:11px;color:var(--wmute)}
+
+/* WHY */
+.why-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:center}
+.why-img{height:490px;border-radius:var(--r2);overflow:hidden;position:relative}
+.why-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.52)}
+.why-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.38),rgba(7,9,13,.5))}
+.wis{position:absolute;top:22px;right:22px;z-index:2;background:rgba(7,9,13,.85);backdrop-filter:blur(8px);border:1px solid var(--borderb);border-radius:10px;padding:14px 16px;text-align:center}
+.wisn{font-size:28px;font-weight:700;color:var(--white);letter-spacing:-1px;line-height:1}
+.wisn span{color:var(--blue2)}
+.wisl{font-size:10px;color:var(--wmute);letter-spacing:.5px;text-transform:uppercase;margin-top:3px}
+.why-list{display:flex;flex-direction:column;gap:14px}
+.wi{display:flex;gap:14px;padding:18px;background:var(--dark2);border:1px solid var(--border);border-radius:var(--r);transition:border-color .2s}
+.wi:hover{border-color:var(--borderb)}
+.wi-ic{width:40px;height:40px;min-width:40px;border-radius:9px;background:var(--glow);border:1px solid var(--borderb);display:flex;align-items:center;justify-content:center;color:var(--blue2);font-size:17px}
+.wi-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px}
+.wi-desc{font-size:12px;color:var(--wmute);line-height:1.75}
+
+/* WORK */
+.work-bg{background:var(--dark3)}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.wc{border-radius:var(--r2);overflow:hidden;background:var(--dark2);border:1px solid var(--border);transition:border-color .25s,transform .2s;cursor:pointer}
+.wc:hover{border-color:var(--borderb);transform:translateY(-3px)}
+.wc-img{height:195px;position:relative;overflow:hidden}
+.wc-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(.75);transition:transform .4s}
+.wc:hover .wc-img img{transform:scale(1.04)}
+.wc-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,9,13,.82))}
+.wc-cat{position:absolute;top:12px;left:12px;z-index:2;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;background:var(--blue);color:#fff;padding:4px 10px;border-radius:5px}
+.wc-body{padding:18px}
+.wc-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:5px}
+.wc-desc{font-size:12px;color:var(--wmute);line-height:1.75}
+
+/* TESTIMONIALS */
+.testi-bg{background:var(--dark2)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tc{padding:26px;background:var(--dark3);border:1px solid var(--border);border-radius:var(--r2)}
+.tc-stars{color:var(--blue2);font-size:14px;margin-bottom:12px;letter-spacing:2px}
+.tc-text{font-size:12px;color:var(--wdim);line-height:1.85;margin-bottom:16px;font-style:italic}
+.tc-auth{display:flex;align-items:center;gap:11px}
+.tc-av{width:36px;height:36px;border-radius:50%;overflow:hidden;border:2px solid var(--borderb);flex-shrink:0}
+.tc-av img{width:100%;height:100%;object-fit:cover}
+.tc-name{font-size:12px;font-weight:600;color:var(--white)}
+.tc-role{font-size:10px;color:var(--wmute)}
+
+/* FAQ */
+.faq-layout{display:grid;grid-template-columns:1fr 1.35fr;gap:60px;align-items:start}
+.faq-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.faq-item{background:var(--dark2)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:17px 20px;cursor:pointer;font-size:13px;font-weight:500;color:var(--white);gap:12px}
+.faq-q i{font-size:16px;color:var(--blue2);flex-shrink:0;transition:transform .25s}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s;font-size:12px;color:var(--wmute);line-height:1.85;padding:0 20px}
+.faq-item.open .faq-a{max-height:200px;padding:0 20px 16px}
+.faq-item.open .faq-q i{transform:rotate(45deg)}
+.faq-right-img{height:270px;border-radius:var(--r2);overflow:hidden;position:relative;margin-bottom:18px}
+.faq-right-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.52)}
+.faq-right-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,99,235,.35),rgba(7,9,13,.5))}
+.faq-cta{background:var(--dark3);border:1px solid var(--borderb);border-radius:var(--r2);padding:26px;position:relative;overflow:hidden}
+.faq-cta::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(37,99,235,.18),transparent 70%)}
+.faq-cta h4{font-size:15px;font-weight:700;letter-spacing:-.3px;margin-bottom:7px}
+.faq-cta p{font-size:12px;color:var(--wdim);margin-bottom:16px;line-height:1.8}
+
+/* CONTACT */
+.contact-bg{background:var(--dark3)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:start}
+.cii{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;padding:16px;background:var(--dark2);border:1px solid var(--border);border-radius:var(--r);transition:border-color .2s}
+.cii:hover{border-color:var(--borderb)}
+.cii-ico{width:38px;height:38px;min-width:38px;border-radius:8px;background:var(--glow);border:1px solid var(--borderb);display:flex;align-items:center;justify-content:center;color:var(--blue2);font-size:16px}
+.cii-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--wmute);margin-bottom:2px}
+.cii-val{font-size:13px;color:var(--white)}
+.map-box{height:186px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-top:14px;background:var(--dark4);position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px}
+.map-box i{font-size:30px;color:var(--blue2);position:relative;z-index:2}
+.map-box p{font-size:12px;color:var(--wdim);font-weight:500;position:relative;z-index:2}
+.map-box span{font-size:11px;color:var(--wmute);position:relative;z-index:2}
+.map-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--blue2);animation:mring 2s infinite}
+@keyframes mring{0%{box-shadow:0 0 0 0 rgba(59,130,246,.5)}100%{box-shadow:0 0 0 32px rgba(59,130,246,0)}}
+.cf{background:var(--dark2);border:1px solid var(--border);border-radius:var(--r2);padding:34px}
+.cf-title{font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:4px}
+.cf-sub{font-size:12px;color:var(--wmute);margin-bottom:24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--wmute);margin-bottom:6px;font-weight:500}
+.fg input,.fg textarea,.fg select{width:100%;background:var(--dark3);border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-family:var(--f);font-size:12px;font-weight:300;color:var(--white);outline:none;transition:border-color .2s;appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--blue)}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(240,244,255,.18)}
+.fg textarea{resize:vertical;min-height:96px}
+.fg select option{background:var(--dark3)}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:52px 5% 26px;position:relative;z-index:1}
+.footer-main{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px}
+.fbrand p{font-size:12px;color:var(--wmute);line-height:1.8;margin-top:11px;max-width:270px}
+.fbname{font-size:16px;font-weight:700;color:var(--white)}
+.fbname span{color:var(--blue2)}
+.fcol h5{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blue2);font-weight:500;margin-bottom:14px}
+.fcol a{display:block;font-size:12px;color:var(--wmute);text-decoration:none;margin-bottom:9px;cursor:pointer;transition:color .2s}
+.fcol a:hover{color:var(--white)}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:22px;border-top:1px solid var(--border)}
+.fcopy{font-size:11px;color:var(--wmute)}
+.fsocs{display:flex;gap:9px}
+.fsoc{width:31px;height:31px;border-radius:7px;background:var(--dark3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--wmute);font-size:14px;cursor:pointer;transition:border-color .2s,color .2s;text-decoration:none}
+.fsoc:hover{border-color:var(--borderb);color:var(--blue2)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .tech-grid{grid-template-columns:repeat(4,1fr)}
+  .footer-main{grid-template-columns:1fr 1fr}
+  .proc-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  #hero{grid-template-columns:1fr;padding-top:calc(var(--nav)+40px)}
+  .hero-right{display:none}
+  .about-grid,.why-layout,.faq-layout,.contact-grid,.services-intro{grid-template-columns:1fr}
+  .work-grid,.testi-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .tech-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-main{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+  .nav-burger{display:block}
+  .about-vals{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .ais{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand" onclick="gotoSection('hero')">
+    <div class="nav-logo-box">
+      <img src="https://i.postimg.cc/PrMYBvhJ/emptybyte-logo.jpg" alt="EmptyByte" onerror="this.parentElement.innerHTML='<span style=\'font-size:11px;font-weight:700;color:#3B82F6\'>EB</span>'"/>
+    </div>
+    <span class="nav-name">Empty<span>Byte</span></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#hero" class="active">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cta" onclick="gotoSection('contact')">Get in Touch</button>
+    <button class="nav-burger" onclick="toggleMenu()"><i class="ti ti-menu-2"></i></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><i class="ti ti-bolt"></i>IT Solutions &amp; Digital Innovation &nbsp;·&nbsp; Palakkad, Kerala</div>
+    <h1 class="hero-h1">Turning Ideas<br/>into <span class="blue">Digital<br/>Reality</span></h1>
+    <p class="hero-sub">EmptyByte is a next-generation technology studio crafting world-class apps, websites, and digital products. Founded in 2026 by 7 young entrepreneurs with one bold mission — making great technology accessible to every business.</p>
+    <div class="hero-actions">
+      <button class="btnp" onclick="gotoSection('services')"><i class="ti ti-briefcase"></i>Explore Services</button>
+      <button class="btng" onclick="gotoSection('about')"><i class="ti ti-users"></i>Our Story</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">7<span>+</span></div><div class="hstat-lbl">Co-Founders</div></div>
+      <div class="hstat"><div class="hstat-num">20<span>26</span></div><div class="hstat-lbl">Est. Year</div></div>
+      <div class="hstat"><div class="hstat-num">4<span>+</span></div><div class="hstat-lbl">Core Services</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-main">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=900&q=80" alt="Tech workspace"/>
+      <div class="hio">
+        <div class="hio-ic"><i class="ti ti-rocket"></i></div>
+        <div><p>Ready to Launch Your Project?</p><span>Our team is available 6 days a week</span></div>
+      </div>
+    </div>
+    <div class="hero-img-row">
+      <div class="him"><img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80" alt="App dev"/><div class="him-lbl"><i class="ti ti-device-mobile" style="font-size:11px;margin-right:4px"></i>App Development</div></div>
+      <div class="him"><img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80" alt="Web design"/><div class="him-lbl"><i class="ti ti-code" style="font-size:11px;margin-right:4px"></i>Web Solutions</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span class="tki"><i class="ti ti-device-mobile"></i>App Development</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-code"></i>Web Development</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-vector-bezier"></i>UI/UX Design</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-server"></i>IT Consulting</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-map-pin"></i>Palakkad, Kerala</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-world"></i>Global Delivery</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-users"></i>7 Co-Founders</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-bolt"></i>Founded 2026</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-device-mobile"></i>App Development</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-code"></i>Web Development</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-vector-bezier"></i>UI/UX Design</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-server"></i>IT Consulting</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-map-pin"></i>Palakkad, Kerala</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-world"></i>Global Delivery</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-users"></i>7 Co-Founders</span><span class="tkd">·</span>
+    <span class="tki"><i class="ti ti-bolt"></i>Founded 2026</span><span class="tkd">·</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-intro">
+    <div>
+      <div class="tag"><i class="ti ti-briefcase"></i>What We Do</div>
+      <div class="stitle">Services Built for the<br/>Modern Digital Age</div>
+      <p class="ssub" style="margin-bottom:24px;">From concept to code — end-to-end digital solutions that are precise, performant, and built to last. No generalists. No shortcuts. Just exceptional work.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="pill"><i class="ti ti-check"></i>Full-cycle development from day one</div>
+        <div class="pill"><i class="ti ti-check"></i>On-time delivery with transparent updates</div>
+        <div class="pill"><i class="ti ti-check"></i>30-day post-launch support included</div>
+        <div class="pill"><i class="ti ti-check"></i>Startup-friendly pricing, no hidden fees</div>
+      </div>
+    </div>
+    <div class="sii"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80" alt="Development"/></div>
+  </div>
+  <div class="services-grid">
+    <div class="svc reveal">
+      <div class="svc-ic"><i class="ti ti-device-mobile"></i></div>
+      <div class="svc-name">App Development</div>
+      <div class="svc-desc">Native and cross-platform mobile apps for iOS and Android. We engineer for performance, reliability, and seamless user experience from first tap to last interaction.</div>
+      <div class="svc-pills"><span class="sp">iOS & Android</span><span class="sp">Flutter</span><span class="sp">React Native</span><span class="sp">API Integration</span><span class="sp">App Store</span></div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-ic"><i class="ti ti-code"></i></div>
+      <div class="svc-name">Web Development</div>
+      <div class="svc-desc">High-performance websites and web apps — from landing pages to complex SaaS platforms. Clean architecture, fast load times, and built mobile-first.</div>
+      <div class="svc-pills"><span class="sp">React / Next.js</span><span class="sp">Node.js</span><span class="sp">CMS</span><span class="sp">E-Commerce</span><span class="sp">SEO</span></div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-ic"><i class="ti ti-vector-bezier"></i></div>
+      <div class="svc-name">UI/UX Design</div>
+      <div class="svc-desc">Research-driven interfaces that are intuitive, beautiful, and built to convert. We create design systems and visual languages that scale across your entire product.</div>
+      <div class="svc-pills"><span class="sp">User Research</span><span class="sp">Prototyping</span><span class="sp">Figma</span><span class="sp">Design Systems</span><span class="sp">Branding</span></div>
+    </div>
+    <div class="svc reveal">
+      <div class="svc-ic"><i class="ti ti-server"></i></div>
+      <div class="svc-name">IT Consulting</div>
+      <div class="svc-desc">Strategic technology guidance to modernise, scale, and future-proof your business. From stack selection to full digital transformation roadmaps — clear, honest advice.</div>
+      <div class="svc-pills"><span class="sp">Tech Audits</span><span class="sp">Digital Strategy</span><span class="sp">Cloud Advisory</span><span class="sp">Security Review</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<div class="proc-wrap">
+  <div class="tag"><i class="ti ti-list-check"></i>How We Work</div>
+  <div class="stitle">Our Process</div>
+  <p class="ssub">Structured, transparent, and designed to deliver results without surprises at every step.</p>
+  <div class="proc-grid">
+    <div class="proc-step reveal" data-n="01"><div class="proc-ico"><i class="ti ti-bulb"></i></div><div class="proc-title">Discovery & Strategy</div><div class="proc-desc">We deeply understand your goals, audience, and competitive landscape. Every project starts with a clear strategy document, scope definition, and agreed timeline.</div></div>
+    <div class="proc-step reveal" data-n="02"><div class="proc-ico"><i class="ti ti-pencil"></i></div><div class="proc-title">Design & Prototype</div><div class="proc-desc">Wireframes, user flows, and high-fidelity mockups. You review and approve before a single line of code is written — no surprises, no wasted effort.</div></div>
+    <div class="proc-step reveal" data-n="03"><div class="proc-ico"><i class="ti ti-cpu"></i></div><div class="proc-title">Build & Test</div><div class="proc-desc">Agile sprints with regular check-ins and demos. Rigorous QA testing across devices ensures a polished, bug-free product ready for the real world.</div></div>
+    <div class="proc-step reveal" data-n="04"><div class="proc-ico"><i class="ti ti-rocket"></i></div><div class="proc-title">Launch & Support</div><div class="proc-desc">Smooth zero-downtime deployment. Post-launch monitoring, performance optimisation, and ongoing support as your product grows and evolves.</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="about-bg">
+  <div class="about-grid">
+    <div class="about-imgs">
+      <div class="aib">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Team"/>
+        <div class="aibadge"><div><div class="ainum">7<span>+</span></div><div class="ailbl">Co-Founders</div></div></div>
+      </div>
+      <div class="ais"><img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80" alt="Laptop"/></div>
+      <div class="ais"><img src="https://images.unsplash.com/photo-1573496546038-82f9c39f6365?w=600&q=80" alt="Strategy"/></div>
+    </div>
+    <div class="about-text">
+      <div class="tag"><i class="ti ti-users"></i>Our Story</div>
+      <div class="stitle" style="margin-bottom:16px;">Seven Builders,<br/>One Bold Idea</div>
+      <p class="about-story">EmptyByte was founded in 2026 by seven young entrepreneurs who shared a single conviction: the gap between a powerful idea and a powerful digital product should not exist. We didn't set out to become an agency — we set out to solve real problems, elegantly.</p>
+      <p class="about-story">Based in Palakkad, Kerala, our founders came together from diverse disciplines — mobile engineering, full-stack development, UI/UX design, business strategy, and systems thinking. Each one brought a unique perspective. Together, we built something greater than the sum of our parts.</p>
+      <p class="about-story">In an industry full of bloated agencies and freelancers who overpromise, EmptyByte exists to be different: transparent, technically rigorous, and genuinely invested in every client's success. We're proving that world-class digital work can come from anywhere.</p>
+      <div class="founders-row">
+        <div class="fchip"><div class="fav">F1</div>Engineering</div>
+        <div class="fchip"><div class="fav">F2</div>Design</div>
+        <div class="fchip"><div class="fav">F3</div>Backend</div>
+        <div class="fchip"><div class="fav">F4</div>Mobile</div>
+        <div class="fchip"><div class="fav">F5</div>Strategy</div>
+        <div class="fchip"><div class="fav">F6</div>Product</div>
+        <div class="fchip"><div class="fav">F7</div>Business</div>
+      </div>
+      <div class="about-vals">
+        <div class="avb reveal"><div class="avb-ic"><i class="ti ti-eye"></i></div><div class="avb-title">Vision</div><div class="avb-text">The most trusted digital partner for startups and businesses across India and beyond.</div></div>
+        <div class="avb reveal"><div class="avb-ic"><i class="ti ti-heart"></i></div><div class="avb-title">Mission</div><div class="avb-text">Deliver solutions that are functional, beautiful, and genuinely transformative.</div></div>
+        <div class="avb reveal"><div class="avb-ic"><i class="ti ti-diamond"></i></div><div class="avb-title">Integrity</div><div class="avb-text">Transparency with every client. No surprise invoices, ever.</div></div>
+        <div class="avb reveal"><div class="avb-ic"><i class="ti ti-sparkles"></i></div><div class="avb-title">Innovation</div><div class="avb-text">We never stop learning, iterating, and raising the bar for our craft.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech-bg" style="padding-top:72px;padding-bottom:72px;">
+  <div style="text-align:center;margin-bottom:34px;">
+    <div class="tag" style="justify-content:center;"><i class="ti ti-cpu"></i>Technology Stack</div>
+    <div class="stitle" style="max-width:460px;margin:0 auto 0;">Tools &amp; Technologies We Master</div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-react"></i></div><div class="tech-name">React.js</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-nextjs"></i></div><div class="tech-name">Next.js</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-nodejs"></i></div><div class="tech-name">Node.js</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-flutter"></i></div><div class="tech-name">Flutter</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-python"></i></div><div class="tech-name">Python</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-firebase"></i></div><div class="tech-name">Firebase</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-figma"></i></div><div class="tech-name">Figma</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-aws"></i></div><div class="tech-name">AWS</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-database"></i></div><div class="tech-name">PostgreSQL</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-docker"></i></div><div class="tech-name">Docker</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-git"></i></div><div class="tech-name">Git</div></div>
+    <div class="tech-item reveal"><div class="tech-ico"><i class="ti ti-brand-typescript"></i></div><div class="tech-name">TypeScript</div></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-layout">
+    <div class="why-img">
+      <img src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?w=900&q=80" alt="Modern workspace"/>
+      <div class="wis"><div class="wisn">100<span>%</span></div><div class="wisl">Client Focus</div></div>
+    </div>
+    <div>
+      <div class="tag"><i class="ti ti-shield-check"></i>Why EmptyByte</div>
+      <div class="stitle" style="margin-bottom:12px;">What Sets Us Apart</div>
+      <p style="font-size:13px;color:var(--wdim);line-height:1.9;margin-bottom:26px;">We're not another generic IT agency. We're a tightly-knit founding team that treats every project as our own — with full ownership, transparency, and genuine care for your success.</p>
+      <div class="why-list">
+        <div class="wi reveal"><div class="wi-ic"><i class="ti ti-rocket"></i></div><div><div class="wi-title">Startup-Driven Energy</div><div class="wi-desc">Born from shared conviction. We move fast, iterate boldly, and deliver without cutting corners — because your deadline matters as much to us as it does to you.</div></div></div>
+        <div class="wi reveal"><div class="wi-ic"><i class="ti ti-palette"></i></div><div><div class="wi-title">Design-First Thinking</div><div class="wi-desc">Every pixel has purpose. We obsess over aesthetics and usability in equal measure to deliver interfaces users love and businesses grow from.</div></div></div>
+        <div class="wi reveal"><div class="wi-ic"><i class="ti ti-lock"></i></div><div><div class="wi-title">Full Transparency</div><div class="wi-desc">Bi-weekly updates, real-time project trackers, and zero surprise billing. You always know exactly where your project stands.</div></div></div>
+        <div class="wi reveal"><div class="wi-ic"><i class="ti ti-headset"></i></div><div><div class="wi-title">Lifetime Support</div><div class="wi-desc">We don't disappear after launch. Every project includes post-delivery support, monitoring, and consultation as your product grows.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" class="work-bg">
+  <div class="tag"><i class="ti ti-layout-grid"></i>Our Work</div>
+  <div class="stitle">Projects We're Proud Of</div>
+  <p class="ssub">A glimpse into the kind of work we build — from consumer apps to enterprise platforms, each with the same level of dedication and craft.</p>
+  <div class="work-grid">
+    <div class="wc reveal"><div class="wc-img"><img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80" alt="App"/><div class="wc-cat">App Dev</div></div><div class="wc-body"><div class="wc-title">E-Commerce Mobile App</div><div class="wc-desc">A full-featured shopping app with real-time inventory, payment gateway, and personalised recommendations — built with Flutter for iOS and Android simultaneously.</div></div></div>
+    <div class="wc reveal"><div class="wc-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Dashboard"/><div class="wc-cat">Web Dev</div></div><div class="wc-body"><div class="wc-title">SaaS Analytics Dashboard</div><div class="wc-desc">A data-rich analytics platform for a logistics company, handling live data from thousands of delivery agents across three states with Next.js and Node.js.</div></div></div>
+    <div class="wc reveal"><div class="wc-img"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="UI Design"/><div class="wc-cat">UI/UX</div></div><div class="wc-body"><div class="wc-title">FinTech App Redesign</div><div class="wc-desc">Complete UX overhaul of a digital banking interface. Improved onboarding flow, redesigned key screens, and established a full scalable design system.</div></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-bg">
+  <div class="tag"><i class="ti ti-star"></i>Client Feedback</div>
+  <div class="stitle">What Our Clients Say</div>
+  <p class="ssub">Real words from real clients who trusted us with their ideas and received something far beyond expectations.</p>
+  <div class="testi-grid">
+    <div class="tc reveal"><div class="tc-stars">★★★★★</div><div class="tc-text">"EmptyByte delivered our app ahead of schedule. The team was incredibly responsive and the quality of code and design exceeded everything we hoped for. Truly impressive."</div><div class="tc-auth"><div class="tc-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80" alt="client"/></div><div><div class="tc-name">Rahul Menon</div><div class="tc-role">CEO, StartupKerala</div></div></div></div>
+    <div class="tc reveal"><div class="tc-stars">★★★★★</div><div class="tc-text">"The UI/UX work completely transformed how our users experience the product. Our user retention improved significantly within the first month after the redesign launch."</div><div class="tc-auth"><div class="tc-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80" alt="client"/></div><div><div class="tc-name">Priya Nair</div><div class="tc-role">Founder, EduTech Startup</div></div></div></div>
+    <div class="tc reveal"><div class="tc-stars">★★★★★</div><div class="tc-text">"Professional, honest, and technically brilliant. The IT consulting helped us avoid a very costly architectural mistake. Worth every rupee and much, much more."</div><div class="tc-auth"><div class="tc-av"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&q=80" alt="client"/></div><div><div class="tc-name">Arun Krishnan</div><div class="tc-role">CTO, LogisticsPro</div></div></div></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-layout">
+    <div>
+      <div class="tag"><i class="ti ti-help-circle"></i>FAQ</div>
+      <div class="stitle" style="margin-bottom:26px;">Frequently Asked Questions</div>
+      <div class="faq-list">
+        <div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)">How long does a typical project take?<i class="ti ti-plus"></i></div><div class="faq-a">Project timelines vary by scope. A website takes 3–5 weeks, a mobile app 6–12 weeks, and larger platforms 3–6 months. We always provide a detailed timeline in the proposal before work begins.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is your pricing model?<i class="ti ti-plus"></i></div><div class="faq-a">We offer both fixed-price and time-and-materials models. We're startup-friendly and work with budgets to find the right structure. Every project starts with a transparent, itemised estimate — no surprises.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do you provide support after launch?<i class="ti ti-plus"></i></div><div class="faq-a">Yes — all projects include a 30-day post-launch support period. We also offer ongoing maintenance retainers for updates, monitoring, and new features as your product grows.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Which industries do you work with?<i class="ti ti-plus"></i></div><div class="faq-a">We've worked across e-commerce, logistics, education, finance, healthcare, and retail. Our technical approach is industry-agnostic — great engineering and design applies everywhere.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can you work with clients outside Kerala?<i class="ti ti-plus"></i></div><div class="faq-a">Absolutely. We work with clients across India and internationally. Our remote-first workflow ensures seamless collaboration via Slack, Notion, and Figma regardless of location.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I get started?<i class="ti ti-plus"></i></div><div class="faq-a">Reach out via the contact form or call us directly. We'll schedule a free discovery call, then send a detailed proposal within 48 hours. No commitment needed until you're ready.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="faq-right-img"><img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&q=80" alt="Team meeting"/></div>
+      <div class="faq-cta">
+        <h4>Still have questions?</h4>
+        <p>Reach out directly — we respond to every enquiry within 24 hours. No automated bots, no runaround — just real people who care.</p>
+        <button class="btnp" onclick="gotoSection('contact')"><i class="ti ti-message-circle"></i>Contact Us Directly</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-bg">
+  <div class="tag"><i class="ti ti-send"></i>Get In Touch</div>
+  <div class="stitle" style="margin-bottom:6px;">Let's Build Something<br/>Remarkable Together</div>
+  <p class="ssub" style="margin-bottom:40px;">Whether you have a fully formed brief or just a rough idea — we'd love to hear from you. Honest conversations only.</p>
+  <div class="contact-grid">
+    <div>
+      <div class="cii"><div class="cii-ico"><i class="ti ti-phone"></i></div><div><div class="cii-lbl">Phone</div><div class="cii-val">+91 90742 67478</div></div></div>
+      <div class="cii"><div class="cii-ico"><i class="ti ti-mail"></i></div><div><div class="cii-lbl">Email</div><div class="cii-val">emptybyte@gmail.com</div></div></div>
+      <div class="cii"><div class="cii-ico"><i class="ti ti-map-pin"></i></div><div><div class="cii-lbl">Location</div><div class="cii-val">Palakkad, Kerala, India — 678001</div></div></div>
+      <div class="cii"><div class="cii-ico"><i class="ti ti-clock"></i></div><div><div class="cii-lbl">Working Hours</div><div class="cii-val">Mon – Sat · 9:00 AM – 7:00 PM IST</div></div></div>
+      <div class="cii"><div class="cii-ico"><i class="ti ti-brand-whatsapp"></i></div><div><div class="cii-lbl">WhatsApp</div><div class="cii-val">+91 90742 67478</div></div></div>
+      <div class="map-box">
+        <div class="map-ring"></div>
+        <i class="ti ti-map-2"></i>
+        <p>Palakkad, Kerala, India</p>
+        <span>10.776° N · 76.657° E</span>
+      </div>
+    </div>
+    <div class="cf">
+      <div class="cf-title">Send Us a Message</div>
+      <div class="cf-sub">We respond to every message within 24 hours — no exceptions.</div>
+      <div class="form-row">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="Arun"/></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Kumar"/></div>
+      </div>
+      <div class="fg"><label>Email Address</label><input type="email" placeholder="you@example.com"/></div>
+      <div class="fg"><label>Phone Number</label><input type="tel" placeholder="+91 00000 00000"/></div>
+      <div class="fg"><label>Service Required</label>
+        <select><option value="">Select a service</option><option>App Development</option><option>Web Development</option><option>UI/UX Design</option><option>IT Consulting</option><option>Other / Not Sure Yet</option></select>
+      </div>
+      <div class="fg"><label>Approximate Budget</label>
+        <select><option value="">Select a range</option><option>Under ₹50,000</option><option>₹50,000 – ₹1,50,000</option><option>₹1,50,000 – ₹5,00,000</option><option>₹5,00,000+</option><option>Let's Discuss</option></select>
+      </div>
+      <div class="fg"><label>Tell Us About Your Project</label><textarea placeholder="Briefly describe your idea, goals, or requirements. The more detail, the better!"></textarea></div>
+      <button class="btnp" style="width:100%;justify-content:center;" onclick="handleSubmit(this)"><i class="ti ti-send"></i>Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="fbrand">
+      <div class="fbname">Empty<span>Byte</span></div>
+      <p>A technology studio turning ideas into digital reality. Founded in 2026 by 7 passionate entrepreneurs in Palakkad, Kerala. Building world-class digital products for startups and businesses globally.</p>
+      <div class="fsocs" style="margin-top:16px;">
+        <a class="fsoc" href="mailto:emptybyte@gmail.com"><i class="ti ti-mail"></i></a>
+        <a class="fsoc" href="tel:+919074267478"><i class="ti ti-phone"></i></a>
+        <a class="fsoc"><i class="ti ti-brand-linkedin"></i></a>
+        <a class="fsoc"><i class="ti ti-brand-instagram"></i></a>
+        <a class="fsoc"><i class="ti ti-brand-x"></i></a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h5>Company</h5>
+      <a onclick="gotoSection('hero')">Home</a>
+      <a onclick="gotoSection('about')">About Us</a>
+      <a onclick="gotoSection('work')">Our Work</a>
+      <a onclick="gotoSection('contact')">Contact</a>
+    </div>
+    <div class="fcol">
+      <h5>Services</h5>
+      <a onclick="gotoSection('services')">App Development</a>
+      <a onclick="gotoSection('services')">Web Development</a>
+      <a onclick="gotoSection('services')">UI/UX Design</a>
+      <a onclick="gotoSection('services')">IT Consulting</a>
+    </div>
+    <div class="fcol">
+      <h5>Contact</h5>
+      <a href="tel:+919074267478">+91 90742 67478</a>
+      <a href="mailto:emptybyte@gmail.com">emptybyte@gmail.com</a>
+      <a>Palakkad, Kerala</a>
+      <a>India — 678001</a>
+      <a>Mon–Sat · 9am–7pm IST</a>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <span class="fcopy">© 2026 EmptyByte. All rights reserved. &nbsp;·&nbsp; Palakkad, Kerala, India</span>
+    <span class="fcopy" style="color:rgba(240,244,255,.18)">Turning Ideas into Digital Reality</span>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL + ACTIVE
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('nav');
+  nav.classList.toggle('scrolled',window.scrollY>50);
+  const secs=['hero','services','about','why','work','faq','contact'];
+  const links=document.querySelectorAll('.nav-links a');
+  let cur='hero';
+  secs.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-90)cur=id;
+  });
+  links.forEach(a=>{
+    a.classList.remove('active');
+    if(a.getAttribute('href')==='#'+cur)a.classList.add('active');
+  });
+});
+
+// SMOOTH SCROLL NAV
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const id=a.getAttribute('href').slice(1);
+    const el=document.getElementById(id);
+    if(el){el.scrollIntoView({behavior:'smooth'});closeMenu();}
+  });
+});
+
+function gotoSection(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}
+
+// MOBILE MENU
+function toggleMenu(){
+  const nl=document.getElementById('navLinks');
+  const open=nl.style.display==='flex';
+  if(open){closeMenu();}
+  else{nl.style.cssText='display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(7,9,13,.97);padding:20px 5%;gap:20px;border-bottom:1px solid rgba(255,255,255,.07);z-index:300';}
+}
+function closeMenu(){
+  const nl=document.getElementById('navLinks');
+  nl.style.cssText='';
+}
+
+// FAQ TOGGLE
+function toggleFaq(el){
+  const item=el.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// FORM SUBMIT
+function handleSubmit(btn){
+  btn.innerHTML='<i class="ti ti-check"></i> Message Sent!';
+  btn.style.background='#166534';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='<i class="ti ti-send"></i> Send Message';
+    btn.style.background='';
+    btn.disabled=false;
+  },3000);
+}
+
+// REVEAL ON SCROLL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
